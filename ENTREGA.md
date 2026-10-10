@@ -8,6 +8,8 @@ _Resumo do que está funcionando._
 
 ## Onde guardei os dados
 _Usei banco de dados ou memória? Por quê?_
+## Onde guardei os dados
+Guardei em memória, numa lista dentro do `CheckinsService`. Escolhi assim para focar primeiro no fluxo principal funcionando. Como o NestJS cria uma única instância do service enquanto a API está rodando, todas as requisições usam a mesma fila. A limitação é que os check-ins se perdem quando a API reinicia.
 
 ## Decisões e dificuldades
 _Escolhas que fiz e pontos onde tive dúvida ou dificuldade._
