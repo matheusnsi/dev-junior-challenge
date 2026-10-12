@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Paciente } from './interfaces/paciente.interface';
 
@@ -11,10 +11,24 @@ export class CadastroService {
   }
 
   async buscarPorCpf(cpf: string): Promise<Paciente | null> {
-    const resposta = await fetch(`${this.baseUrl}/pacientes/${cpf}`);
+    let resposta: Response;
+
+    try {
+      resposta = await fetch(`${this.baseUrl}/pacientes/${cpf}`, {
+        signal: AbortSignal.timeout(5000),
+      });
+    } catch {
+      throw new BadGatewayException('Serviço de cadastro indisponível.');
+    }
+
     if (resposta.status === 404) {
       return null;
     }
+
+    if (!resposta.ok) {
+      throw new BadGatewayException('Serviço de cadastro indisponível.');
+    }
+
     return (await resposta.json()) as Paciente;
   }
 }
