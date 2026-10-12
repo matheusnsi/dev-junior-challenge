@@ -3,6 +3,6 @@ import { CadastroService } from './cadastro.service';
 
 @Module({
   providers: [CadastroService],
-  exports: [CadastroService]
+  exports: [CadastroService],
 })
 export class CadastroModule {}

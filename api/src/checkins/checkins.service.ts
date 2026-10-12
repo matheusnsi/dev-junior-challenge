@@ -9,22 +9,22 @@ export class CheckinsService {
 
   constructor(private readonly cadastroService: CadastroService) {}
 
-    listar(): Checkin[] {
+  listar(): Checkin[] {
     return this.fila;
   }
 
   async criar(cpf: string): Promise<Checkin> {
-    const cpfLimpo = cpf.replace(/\D/g, ''); 
+    const cpfLimpo = cpf.replace(/\D/g, '');
     const paciente = await this.cadastroService.buscarPorCpf(cpfLimpo);
     if (!paciente) {
       throw new NotFoundException('Paciente não encontrado');
     }
 
     const checkin: Checkin = {
-        id: randomUUID(),
-        cpf: paciente.cpf,
-        nome: paciente.nome,
-        chegadaEm: new Date(),
+      id: randomUUID(),
+      cpf: paciente.cpf,
+      nome: paciente.nome,
+      chegadaEm: new Date(),
     };
     this.fila.push(checkin);
     return checkin;

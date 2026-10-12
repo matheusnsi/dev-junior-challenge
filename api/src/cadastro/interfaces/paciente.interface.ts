@@ -1,5 +1,5 @@
 export interface Paciente {
-    cpf: string;
-    nome: string;
-    dataNascimento: string;
+  cpf: string;
+  nome: string;
+  dataNascimento: string;
 }
