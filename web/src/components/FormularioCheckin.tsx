@@ -1,20 +1,21 @@
-import { useState } from 'react';
-import type { SubmitEvent } from 'react';
-import { criarCheckin } from '../api';
-import type { Checkin } from '../types';
+import { useState } from "react";
+import type { SubmitEvent } from "react";
+import { criarCheckin } from "../api";
+import type { Checkin } from "../types";
+import { formatarCpf } from "../utils/cpf.ts";
 
 interface FormularioCheckinProps {
   aoRealizarCheckin: (checkin: Checkin) => void;
 }
 
 function FormularioCheckin({ aoRealizarCheckin }: FormularioCheckinProps) {
-  const [cpf, setCpf] = useState('');
+  const [cpf, setCpf] = useState("");
 
   async function enviar(evento: SubmitEvent<HTMLFormElement>) {
     evento.preventDefault();
     const checkin = await criarCheckin(cpf);
     aoRealizarCheckin(checkin);
-    setCpf('');
+    setCpf("");
   }
 
   return (
@@ -23,8 +24,8 @@ function FormularioCheckin({ aoRealizarCheckin }: FormularioCheckinProps) {
       <input
         id="cpf"
         value={cpf}
-        onChange={(evento) => setCpf(evento.target.value)}
-        placeholder="00000000000 ou 000.000.000-00"
+        onChange={(evento) => setCpf(formatarCpf(evento.target.value))}
+        placeholder="000.000.000-00"
         inputMode="numeric"
         maxLength={14}
       />
