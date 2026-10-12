@@ -7,8 +7,8 @@ import { CriarCheckinDto } from './dto/criar-checkin.dto';
 export class CheckinsController {
   constructor(private readonly checkinsService: CheckinsService) {}
 
-  @Get()
-  listar(): Checkin[] {
+    @Get()
+  listar(): Promise<Checkin[]> {
     return this.checkinsService.listar();
   }
 

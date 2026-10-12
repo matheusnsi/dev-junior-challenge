@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
+import { CadastroModule } from '../cadastro/cadastro.module';
+import { DatabaseModule } from '../database/database.module';
 import { CheckinsController } from './checkins.controller';
 import { CheckinsService } from './checkins.service';
-import { CadastroModule } from '../cadastro/cadastro.module';
 
 @Module({
-  imports: [CadastroModule],
+  imports: [CadastroModule, DatabaseModule],
   controllers: [CheckinsController],
   providers: [CheckinsService],
 })
