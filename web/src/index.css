@@ -1,4 +1,161 @@
+:root {
+  --azul: #0b3d6b;
+  --azul-claro: #e8f0f8;
+  --texto: #1f2933;
+  --texto-suave: #5f6b7a;
+  --borda: #d9e2ec;
+  --fundo: #f5f7fa;
+  --erro: #b42318;
+  --erro-fundo: #fef3f2;
+  --sucesso: #067647;
+  --sucesso-fundo: #ecfdf3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+.pagina {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.cabecalho {
+  margin-bottom: 24px;
+}
+
+.cabecalho h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: var(--azul);
+}
+
+.cabecalho p {
+  margin: 4px 0 0;
+  color: var(--texto-suave);
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.cartao {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.cartao h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: 1.125rem;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formulario label {
+  font-weight: 600;
+}
+
+.campo {
+  padding: 12px;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+}
+
+.campo:focus {
+  outline: 2px solid var(--azul);
+  outline-offset: 1px;
+}
+
+.botao {
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--azul);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensagem {
+  margin: 8px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.mensagem-erro {
+  color: var(--erro);
+  background: var(--erro-fundo);
+}
+
+.mensagem-sucesso {
+  color: var(--sucesso);
+  background: var(--sucesso-fundo);
+}
+
+.contador {
+  padding: 2px 10px;
+  font-size: 0.875rem;
+  color: var(--azul);
+  background: var(--azul-claro);
+  border-radius: 999px;
+}
+
+.fila {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fila-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.fila-item:last-child {
+  border-bottom: none;
+}
+
+.horario {
+  color: var(--texto-suave);
+}
+
+.aviso {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 720px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
 }

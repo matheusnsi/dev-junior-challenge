@@ -33,22 +33,31 @@ function FormularioCheckin({ aoRealizarCheckin }: FormularioCheckinProps) {
   }
 
   return (
-    <form onSubmit={enviar}>
+    <form className="formulario" onSubmit={enviar}>
       <label htmlFor="cpf">CPF</label>
       <input
         id="cpf"
+        className="campo"
         value={cpf}
         onChange={(evento) => setCpf(formatarCpf(evento.target.value))}
         placeholder="000.000.000-00"
         inputMode="numeric"
         maxLength={14}
       />
-      <button type="submit" disabled={enviando}>
+      <button type="submit" className="botao" disabled={enviando}>
         {enviando ? 'Enviando...' : 'Fazer check-in'}
       </button>
 
-      {erro && <p role="alert">{erro}</p>}
-      {sucesso && <p role="status">{sucesso}</p>}
+      {erro && (
+        <p role="alert" className="mensagem mensagem-erro">
+          {erro}
+        </p>
+      )}
+      {sucesso && (
+        <p role="status" className="mensagem mensagem-sucesso">
+          {sucesso}
+        </p>
+      )}
     </form>
   );
 }

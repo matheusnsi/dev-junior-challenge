@@ -21,14 +21,32 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>Check-in de pacientes</h1>
-      <FormularioCheckin aoRealizarCheckin={adicionarNaFila} />
-      <h2>Fila</h2>
-      {carregando && <p>Carregando fila...</p>}
-      {erroFila && <p role="alert">{erroFila}</p>}
-      {!carregando && !erroFila && <Fila checkins={checkins} />}
-    </main>
+    <div className="pagina">
+      <header className="cabecalho">
+        <h1>Check-in de pacientes</h1>
+        <p>Informe o CPF para entrar na fila de atendimento.</p>
+      </header>
+
+      <main className="conteudo">
+        <section className="cartao">
+          <h2>Fazer check-in</h2>
+          <FormularioCheckin aoRealizarCheckin={adicionarNaFila} />
+        </section>
+
+        <section className="cartao">
+          <h2>
+            Fila <span className="contador">{checkins.length}</span>
+          </h2>
+          {carregando && <p className="aviso">Carregando fila...</p>}
+          {erroFila && (
+            <p role="alert" className="mensagem mensagem-erro">
+              {erroFila}
+            </p>
+          )}
+          {!carregando && !erroFila && <Fila checkins={checkins} />}
+        </section>
+      </main>
+    </div>
   );
 }
 
