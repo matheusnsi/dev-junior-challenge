@@ -6,9 +6,14 @@ import type { Checkin } from './types';
 
 function App() {
   const [checkins, setCheckins] = useState<Checkin[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erroFila, setErroFila] = useState<string | null>(null);
 
   useEffect(() => {
-    listarCheckins().then(setCheckins);
+    listarCheckins()
+      .then(setCheckins)
+      .catch((erro: Error) => setErroFila(erro.message))
+      .finally(() => setCarregando(false));
   }, []);
 
   function adicionarNaFila(checkin: Checkin) {
@@ -20,7 +25,9 @@ function App() {
       <h1>Check-in de pacientes</h1>
       <FormularioCheckin aoRealizarCheckin={adicionarNaFila} />
       <h2>Fila</h2>
-      <Fila checkins={checkins} />
+      {carregando && <p>Carregando fila...</p>}
+      {erroFila && <p role="alert">{erroFila}</p>}
+      {!carregando && !erroFila && <Fila checkins={checkins} />}
     </main>
   );
 }
