@@ -19,28 +19,23 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
-  # ------------------------------------------------------------------
-  # EXEMPLO (descomente e ajuste, se for usar Docker).
-  # A URL do serviço externo, a partir da sua api, é http://mock-service:4000
-  # (nome do serviço na rede do compose).
-  #
-  # api:
-  #   build: ./api
-  #   environment:
-  #     CADASTRO_URL: http://mock-service:4000
-  #     # DATABASE_URL: postgres://desafio:desafio@db:5432/checkin  (se usar banco)
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - mock-service
-  #
-  # web:
-  #   build: ./web
-  #   ports:
-  #     - "5173:5173"
-  #   depends_on:
-  #     - api
-  # ------------------------------------------------------------------
+
+  api:
+    build: ./api
+    environment:
+      CADASTRO_URL: http://mock-service:4000
+      # DATABASE_URL: postgres://desafio:desafio@db:5432/checkin  (se usar banco)
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mock-service
+  
+  web:
+    build: ./web
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
 
 volumes:
   db_data:
