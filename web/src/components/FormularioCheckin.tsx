@@ -1,21 +1,35 @@
-import { useState } from "react";
-import type { SubmitEvent } from "react";
-import { criarCheckin } from "../api";
-import type { Checkin } from "../types";
-import { formatarCpf } from "../utils/cpf.ts";
+import { useState } from 'react';
+import type { SubmitEvent } from 'react';
+import { criarCheckin } from '../api';
+import type { Checkin } from '../types';
+import { formatarCpf } from '../utils/cpf.ts';
 
 interface FormularioCheckinProps {
   aoRealizarCheckin: (checkin: Checkin) => void;
 }
 
 function FormularioCheckin({ aoRealizarCheckin }: FormularioCheckinProps) {
-  const [cpf, setCpf] = useState("");
+  const [cpf, setCpf] = useState('');
+  const [enviando, setEnviando] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
+  const [sucesso, setSucesso] = useState<string | null>(null);
 
   async function enviar(evento: SubmitEvent<HTMLFormElement>) {
     evento.preventDefault();
-    const checkin = await criarCheckin(cpf);
-    aoRealizarCheckin(checkin);
-    setCpf("");
+    setErro(null);
+    setSucesso(null);
+    setEnviando(true);
+
+    try {
+      const checkin = await criarCheckin(cpf);
+      aoRealizarCheckin(checkin);
+      setSucesso(`Check-in realizado: ${checkin.nome}`);
+      setCpf('');
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : 'Erro inesperado.');
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -29,7 +43,12 @@ function FormularioCheckin({ aoRealizarCheckin }: FormularioCheckinProps) {
         inputMode="numeric"
         maxLength={14}
       />
-      <button type="submit">Fazer check-in</button>
+      <button type="submit" disabled={enviando}>
+        {enviando ? 'Enviando...' : 'Fazer check-in'}
+      </button>
+
+      {erro && <p role="alert">{erro}</p>}
+      {sucesso && <p role="status">{sucesso}</p>}
     </form>
   );
 }
